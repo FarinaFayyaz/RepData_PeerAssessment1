@@ -34,417 +34,61 @@ activityDT <- data.table::fread(input = \"Data/activity.csv\")
 ```
 ## Daily Steps Analysis
 1. Calculate the total number of steps taken per day.
-     "data": {
-      "text/html": [
-       "<table>\n",
-       "<thead><tr><th scope=col>date</th><th scope=col>steps</th></tr></thead>\n",
-       "<tbody>\n",
-       "\t<tr><td>2012-10-01</td><td>   NA     </td></tr>\n",
-       "\t<tr><td>2012-10-02</td><td>  126     </td></tr>\n",
-       "\t<tr><td>2012-10-03</td><td>11352     </td></tr>\n",
-       "\t<tr><td>2012-10-04</td><td>12116     </td></tr>\n",
-       "\t<tr><td>2012-10-05</td><td>13294     </td></tr>\n",
-       "\t<tr><td>2012-10-06</td><td>15420     </td></tr>\n",
-       "\t<tr><td>2012-10-07</td><td>11015     </td></tr>\n",
-       "\t<tr><td>2012-10-08</td><td>   NA     </td></tr>\n",
-       "\t<tr><td>2012-10-09</td><td>12811     </td></tr>\n",
-       "\t<tr><td>2012-10-10</td><td> 9900     </td></tr>\n",
-       "</tbody>\n",
-       "</table>\n"
-      ],
-      "text/latex": [
-       "\\begin{tabular}{r|ll}\n",
-       " date & steps\\\\\n",
-       "\\hline\n",
-       "\t 2012-10-01 &    NA     \\\\\n",
-       "\t 2012-10-02 &   126     \\\\\n",
-       "\t 2012-10-03 & 11352     \\\\\n",
-       "\t 2012-10-04 & 12116     \\\\\n",
-       "\t 2012-10-05 & 13294     \\\\\n",
-       "\t 2012-10-06 & 15420     \\\\\n",
-       "\t 2012-10-07 & 11015     \\\\\n",
-       "\t 2012-10-08 &    NA     \\\\\n",
-       "\t 2012-10-09 & 12811     \\\\\n",
-       "\t 2012-10-10 &  9900     \\\\\n",
-       "\\end{tabular}\n"
-      ],
-      "text/markdown": [
-       "\n",
-       "| date | steps |\n",
-       "|---|---|\n",
-       "| 2012-10-01 |    NA      |\n",
-       "| 2012-10-02 |   126      |\n",
-       "| 2012-10-03 | 11352      |\n",
-       "| 2012-10-04 | 12116      |\n",
-       "| 2012-10-05 | 13294      |\n",
-       "| 2012-10-06 | 15420      |\n",
-       "| 2012-10-07 | 11015      |\n",
-       "| 2012-10-08 |    NA      |\n",
-       "| 2012-10-09 | 12811      |\n",
-       "| 2012-10-10 |  9900      |\n",
-       "\n"
-      ],
-      "text/plain": [
-       "   date       steps\n",
-       "1  2012-10-01    NA\n",
-       "2  2012-10-02   126\n",
-       "3  2012-10-03 11352\n",
-       "4  2012-10-04 12116\n",
-       "5  2012-10-05 13294\n",
-       "6  2012-10-06 15420\n",
-       "7  2012-10-07 11015\n",
-       "8  2012-10-08    NA\n",
-       "9  2012-10-09 12811\n",
-       "10 2012-10-10  9900"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "Total_Steps <- activityDT[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c(\"steps\"), by = .(date)] \n",
-    "head(Total_Steps, 10)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "18f50022-73d8-4556-ad09-df1136f9385d",
-   "metadata": {},
-   "source": [
-    "2. Create a histogram of the total number of steps taken each day."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "id": "7943d878-577e-4a8c-90ff-0cb14cc5c86a",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "Registered S3 methods overwritten by 'ggplot2':\n",
-      "  method         from \n",
-      "  [.quosures     rlang\n",
-      "  c.quosures     rlang\n",
-      "  print.quosures rlang\n",
-      "Warning message:\n",
-      "\"Removed 8 rows containing non-finite values (stat_bin).\""
-     ]
-    },
-    {
-     "data": {
-      "image/png": "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\n47uDkP470LoU4G7o/Ij0h4gjCdbdm898eQW2S0j44nXuPkLK0t2bz3x5BbZLSPjide4+QsrS\n3ZvPfHkFtljKpOIAAAPqSURBVPuFkK7vZhhvPiekH+EzX16B7X4lpL+z/F7M75y7z3x5BbZL\nSPjide4+QsrS3ZvPfHkFtktI+OJ17j5CytLdm898eQW2S0j44nXuPkLK0t2bz3x5BbZLSPji\nde4+QsrS3ZvPfHkFtktI+OJ17j5CytLdm898eQW2S0j44nXuPkLK0t2bz3x5BbZLSPjide4+\nQsrS3ZvPfHkFtktI+OJ17j5CytLdm898eQW2S0j44nXuPkLK0t2bz3x5BbZLSPjide4+QsrS\n3ZvPfHkFtktI+OJ17j5CytLdm898eQW2S0j44nXuPkLK0t2bz3x5BbZLSPjide4+QsrS3ZvP\nfHkFthsT0jcw/1f+zJfnvr57Xh4h3WK+PPf13fPyCOkW8+W5r++el0dIt5gvz31997y85JAA\nfiaEBBAAIQEEQEgAARASQACEBBBAakgf/1F0C8bzmq7/dvunj8tyWsLf1rb4GqflGR5h69SC\nl5cZ0nj9wYfx5sP4+8dlGadl/GFti6/xPIieR9g6tejlEdL0wWcKTow3yzAMabw8Iu2mDz7L\nI6RUxtuPPlNwwTqkTyvwWx4h5XF9fr/b2U3B7nYZxiEZHyEhZeE7pLvrCnzXaL683b/6JqR4\nPKfgugLfSR1vP/NbHiEl4zkF1xUQ0jdJPb07D8l3SHfXFfiu0Xt54/QjIfVmvPk/qyk44T2p\n0wocj3C8+fDDQlr6e91/wvZdA0fO/6Pqukbn5Y2tN1wUfmcDwI+FkAACICSAAAgJIABCAgiA\nkAACICSAAAgJIABCAgiAkIqwfXoYh/XT4dMng/dcwCcIqQZv43Bk3O7vGTfND+5JDVbD4z6h\n9/WwISRLuCc1OMez3X88PDAdPn0cjnEdfuthWL8ffvvXOKyeFlzlHUNINXgYXi6fnkM6Ptdb\nHX/+eH7Otzk++6OkJSCkGrzvH2s2z8eHndOj06/Dk7zNoZphWG935+d877vXgZciloCQirD9\ntTo8Ar3uziGtjndueDj89G0f2uHBaRweX/5tgV4QUh3eNo/r4fkc0nDm8uXT4ceX/dO91fvC\nq7xTCKkWhydufw1p39pqGF8XXeC9Qkg1GIbt+eOHp3anX3o/PLVbn372xIvji8Cp12AzrPeP\nNNvN6Yui4y9sdrvnQz7D/oftevh1+BrpdffGiw2LQEhFWJ3f2fB+KGffyvb0Voe3Y0jD8ZfO\nL3//WnqpdwkhVeFpn8u4OTzBezpW8/44HB+lDk/t1sPj8TWGzTiMdLQIhFQevihygJtQHkJy\ngJtQHkJygJtQHkJygJsAEAAhAQRASAABEBJAAIQEEAAhAQRASAABEBJAAP8PNe/4DaIY0nIA\nAAAASUVORK5CYII=",
-      "text/plain": [
-       "plot without title"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "library(ggplot2)\n",
-    "ggplot(Total_Steps, aes(x = steps)) +\n",
-    "    geom_histogram(fill = \"blue\", binwidth = 1000) +\n",
-    "    labs(title = \"Daily Steps\", x = \"Steps\", y = \"Frequency\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "c36c8830-a171-4709-8210-977c16e8652e",
-   "metadata": {},
-   "source": [
-    "3. Calculate and report the mean and median of the total number of steps taken per day."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 5,
-   "id": "ca9442e6-5d37-4b9a-bf62-380ca5ef153c",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<table>\n",
-       "<thead><tr><th scope=col>Mean_Steps</th><th scope=col>Median_Steps</th></tr></thead>\n",
-       "<tbody>\n",
-       "\t<tr><td>10766.19</td><td>10765   </td></tr>\n",
-       "</tbody>\n",
-       "</table>\n"
-      ],
-      "text/latex": [
-       "\\begin{tabular}{r|ll}\n",
-       " Mean\\_Steps & Median\\_Steps\\\\\n",
-       "\\hline\n",
-       "\t 10766.19 & 10765   \\\\\n",
-       "\\end{tabular}\n"
-      ],
-      "text/markdown": [
-       "\n",
-       "| Mean_Steps | Median_Steps |\n",
-       "|---|---|\n",
-       "| 10766.19 | 10765    |\n",
-       "\n"
-      ],
-      "text/plain": [
-       "  Mean_Steps Median_Steps\n",
-       "1 10766.19   10765       "
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "Total_Steps[, .(Mean_Steps = mean(steps, na.rm = TRUE), Median_Steps = median(steps, na.rm = TRUE))]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "48b3dad9-0e38-4e7b-afb2-f0a2f58494ba",
-   "metadata": {},
-   "source": [
-    "## Average Daily Activity Pattern\n",
-    "\n",
-    "1. Generate a time series plot of the 5-minute interval (x-axis) and the average number of steps taken across all days (y-axis)."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 6,
-   "id": "c93b5c9e-2e92-46de-8d12-205093625f9c",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "image/png": "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\nYRIMkBgmwfwPxu4x5OiwXysAAAAASUVORK5CYII=",
-      "text/plain": [
-       "plot without title"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "IntervalDT <- activityDT[, c(lapply(.SD, mean, na.rm = TRUE)), .SDcols = c(\"steps\"), by = .(interval)] \n",
-    "\n",
-    "ggplot(IntervalDT, aes(x = interval , y = steps)) + \n",
-    "    geom_line(color=\"blue\", size=1) + \n",
-    "    labs(title = \"Avg. Daily Steps\", x = \"Interval\", y = \"Avg. Steps per day\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "16c9235d-d866-44f6-bc6a-43678a44f57b",
-   "metadata": {},
-   "source": [
-    "2. Identify the 5-minute interval, on average across all days, with the maximum number of steps."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 7,
-   "id": "27e64362-76c0-4925-92f1-e1292a2f6f52",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<table>\n",
-       "<thead><tr><th scope=col>max_interval</th></tr></thead>\n",
-       "<tbody>\n",
-       "\t<tr><td>835</td></tr>\n",
-       "</tbody>\n",
-       "</table>\n"
-      ],
-      "text/latex": [
-       "\\begin{tabular}{r|l}\n",
-       " max\\_interval\\\\\n",
-       "\\hline\n",
-       "\t 835\\\\\n",
-       "\\end{tabular}\n"
-      ],
-      "text/markdown": [
-       "\n",
-       "| max_interval |\n",
-       "|---|\n",
-       "| 835 |\n",
-       "\n"
-      ],
-      "text/plain": [
-       "  max_interval\n",
-       "1 835         "
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "IntervalDT[steps == max(steps), .(max_interval = interval)]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "ebe96dc9-4815-4761-bacc-a386b2bc9616",
-   "metadata": {},
-   "source": [
-    "## Imputing Missing Values\n",
-    "\n",
-    "1. Calculate and report the total number of missing values in the dataset."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 8,
-   "id": "7522eef1-beca-4772-8332-36ccab3cc5d5",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "2304"
-      ],
-      "text/latex": [
-       "2304"
-      ],
-      "text/markdown": [
-       "2304"
-      ],
-      "text/plain": [
-       "[1] 2304"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "activityDT[is.na(steps), .N ]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "d1c4f3b0-e7d1-4472-b589-d8ec20c0f145",
-   "metadata": {},
-   "source": [
-    "2. Devise a strategy for filling in missing values. For simplicity, fill in missing values with the median of the dataset."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 9,
-   "id": "058bfd7a-38bd-41f7-91e5-44979e4b8f8a",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "activityDT[is.na(steps), \"steps\"] <- activityDT[, c(lapply(.SD, median, na.rm = TRUE)), .SDcols = c(\"steps\")]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "c1191ea6-2be2-4d41-8f1a-f2079dd73cfd",
-   "metadata": {},
-   "source": [
-    "3. Create a new dataset with missing data filled in."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 10,
-   "id": "cc353725-4951-4108-b5b8-4b779399f23e",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "data.table::fwrite(x = activityDT, file = \"data/tidyData.csv\", quote = FALSE)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "2d817fd9-5bd8-4a43-b799-4d646ecc20e0",
-   "metadata": {},
-   "source": [
-    "4. Compare the histogram of total steps taken each day and report the mean and median. Assess the impact of imputing missing data on estimates."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 11,
-   "id": "8f0b401d-86cf-4650-a115-e15260c63a68",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<table>\n",
-       "<thead><tr><th scope=col>Mean_Steps</th><th scope=col>Median_Steps</th></tr></thead>\n",
-       "<tbody>\n",
-       "\t<tr><td>9354.23</td><td>10395  </td></tr>\n",
-       "</tbody>\n",
-       "</table>\n"
-      ],
-      "text/latex": [
-       "\\begin{tabular}{r|ll}\n",
-       " Mean\\_Steps & Median\\_Steps\\\\\n",
-       "\\hline\n",
-       "\t 9354.23 & 10395  \\\\\n",
-       "\\end{tabular}\n"
-      ],
-      "text/markdown": [
-       "\n",
-       "| Mean_Steps | Median_Steps |\n",
-       "|---|---|\n",
-       "| 9354.23 | 10395   |\n",
-       "\n"
-      ],
-      "text/plain": [
-       "  Mean_Steps Median_Steps\n",
-       "1 9354.23    10395       "
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "image/png": "iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAAOVBMVEUAAAAAAP8zMzNNTU1o\naGh8fHyMjIyampqnp6eysrK9vb3Hx8fQ0NDZ2dnh4eHp6enr6+vw8PD///+w0uxBAAAACXBI\nWXMAABJ0AAASdAHeZh94AAAgAElEQVR4nO2di1bbyrZEdbcwOEDg4P//2Gubl+nItNSrZVV1\nzxrjEEjCdPVamsePeCfDgRASzrB1AUJaCCIRUiGIREiFIBIhFYJIhFQIIhFSIYhESIUgEiEV\ngkiEVAgiEVIhdUQa3jM+vEz80ueHiTw/jMNwt387ff72UKUKIVukqkjH7P/9pcNVke4/v+v5\n+u8hxCG1RDr/8Po4DH9++fUkj8P4/PFdL4hErFNVpMPhZRjefvv1HxmH1/dPHocHRCLWqSzS\nYf9+l7S/G4bd369fOuo13L3/hq9PLr/r+Nn5Id7p87+747c+f/zs4/jx+eHl4fQc7G+VuoTU\nTm2RXob7w+m+5udTn+OH/fAuxNP3g7/d5TOqT5Gevp9rHR8nfn3+9+LZFCFyqS3S+dM/Z1n+\nDLvDt0ivH/dEu8/Hc8cnR+PxPubp5Qfj5XxH9rI7GXO8C3o6HJ7H0zOou+H46dGyr7szQpSy\nikh370+Uvl+wO324P9+bvF2q8Pr+st398zdj//6tb6c7tuHDuXHPMyginlVEOubl+c/up0jv\nD/qefr6s93b+bd93XUcHP3P8md37b7q/O2l4vPN6PRCimfoijccPj+OnDBd3S/enh2gXj+y+\n8nd3suudMVyK9HHndTecHwYec/dYpS4htVNbpL+n+53H433M/uk1Eel0l3T5yO77m95O9n2K\ndEH9+L278889P5xUmvxjKkK2Tv2Xv59OdyGXr3x//frx3ujykd3u+yW48/3P+fecX1n4/Nn7\n9x/vP+V7eTjf3xEil+p/IDt+ffmcivQ87C8f2X2/BPd0ejb0/nsehod3zvln3l94GL9fJec1\nB6KZ6m8ROj2LuTt9fB5TkQ5344+Xr3fD+HRU5XU/vL/YfXLs5fzHRi/jx8vfz2fO2+fL3/vP\nOylCtLLKm1YfP7/6+1Ok55/PcV53n7/v9LN37y9OPF/+gez91x/CfvyB7MgLd0QyVUW62388\nwXk8/VHr3+f3Pww6fIn0NiSv2T3fj1/f9XL3/gTodT9+vDp3fj/E8PGfZvw9v0UIj4hmbvqc\n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",
-      "text/plain": [
-       "plot without title"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "Total_Steps <- activityDT[, c(lapply(.SD, sum)), .SDcols = c(\"steps\"), by = .(date)] \n",
-    "\n",
-    "Total_Steps[, .(Mean_Steps = mean(steps), Median_Steps = median(steps))]\n",
-    "\n",
-    "ggplot(Total_Steps, aes(x = steps)) + \n",
-    "    geom_histogram(fill = \"blue\", binwidth = 1000) + \n",
-    "    labs(title = \"Daily Steps\", x = \"Steps\", y = \"Frequency\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "ed9ae74e-e87a-47d3-8b2f-26ffeea2e117",
-   "metadata": {},
-   "source": [
-    "**Type of Estimate:**\n",
-    "\n",
-    "| Mean_Steps | Median_Steps |\n",
-    "|------------|--------------|\n",
-    "| 10765      | 10765        |\n",
-    "| 9354.23    | 10395        |"
-   ]
-  },
-  {
+```{r}
+Total_Steps <- activityDT[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
+
+head(Total_Steps, 10)
+```
+2. Create a histogram of the total number of steps taken each day.
+```{r}
+library(ggplot2)
+    "ggplot(Total_Steps, aes(x = steps))
+    "    geom_histogram(fill = \"blue\", binwidth = 1000) +
+    "    labs(title = \"Daily Steps\", x = \"Steps\", y = \"Frequency\")
+```
+3. Calculate and report the mean and median of the total number of steps taken per day."
+```{r}
+Total_Steps[, .(Mean_Steps = mean(steps, na.rm = TRUE), Median_Steps = median(steps, na.rm = TRUE))]
+```
+## Average Daily Activity Pattern
+1. Generate a time series plot of the 5-minute interval (x-axis) and the average number of steps taken across all days (y-axis)
+```{r}
+IntervalDT <- activityDT[, c(lapply(.SD, mean, na.rm = TRUE)), .SDcols = c(\"steps\"), by = .(interval)]
+ggplot(IntervalDT, aes(x = interval , y = steps)) + 
+geom_line(color=\"blue\", size=1) + 
+labs(title = \"Avg. Daily Steps\", x = \"Interval\", y = \"Avg. Steps per day\")
+```
+2. Identify the 5-minute interval, on average across all days, with the maximum number of steps.
+```{r}
+IntervalDT[steps == max(steps), .(max_interval = interval)]
+```
+## Imputing Missing Values
+1. Calculate and report the total number of missing values in the dataset.
+```{r}
+activityDT[is.na(steps), .N ]
+```
+2. Devise a strategy for filling in missing values. For simplicity, fill in missing values with the median of the dataset."
+```{r}
+activityDT[is.na(steps), \"steps\"] <- activityDT[, c(lapply(.SD, median, na.rm = TRUE)), .SDcols = c(\"steps\")]
+```
+3. Create a new dataset with missing data filled in.
+```{r}
+data.table::fwrite(x = activityDT, file = \"data/tidyData.csv\", quote = FALSE)
+```
+4. Compare the histogram of total steps taken each day and report the mean and median. Assess the impact of imputing missing data on estimates.
+```{r}
+Total_Steps <- activityDT[, c(lapply(.SD, sum)), .SDcols = c(\"steps\"), by = .(date)] 
+Total_Steps[, .(Mean_Steps = mean(steps), Median_Steps = median(steps))]
+ggplot(Total_Steps, aes(x = steps)) + 
+geom_histogram(fill = \"blue\", binwidth = 1000) + 
+ labs(title = \"Daily Steps\", x = \"Steps\", y = \"Frequency\")
+```
+**Type of Estimate:**
+| Mean_Steps | Median_Steps |
+|------------|--------------|
+| 10765      | 10765        |
+| 9354.23    | 10395        |
+
    "cell_type": "markdown",
    "id": "a87c08c9-6e9e-4dd5-b81b-bd7eb8625a27",
    "metadata": {},

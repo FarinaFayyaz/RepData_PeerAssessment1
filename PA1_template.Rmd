@@ -1,88 +1,39 @@
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "id": "1a4a2959-4519-4093-9f03-daae07101b7b",
-   "metadata": {},
-   "source": [
-    "# Reproducible Research Project 1\n",
-    "**Author**: Farina Fayyaz   \n",
-    "**Date:** 10th Febraury, 2024  \n",
-    "**Repository:** Explore the \"Data Science Coursera\" GitHub repository for the complete specialization: [Data Science Coursera](https://github.com/FarinaFayyaz/datasciencecoursera)\n",
-    "\n",
-    "## Introduction\n",
-    "The advent of activity monitoring devices, such as Fitbit, Nike Fuelband, or Jawbone Up, has enabled the collection of extensive personal movement data. These devices are integral to the \"quantified self\" movement, where individuals regularly measure themselves to enhance health, identify behavioral patterns, or simply indulge their tech enthusiasm. Despite the potential insights, the raw data's complexity and a dearth of statistical methods and software for analysis hinder the full utilization of this data.\n",
-    "\n",
-    "This project utilizes data from a personal activity monitoring device, capturing information at 5-minute intervals throughout the day. The dataset spans two months (October and November 2012) from an anonymous individual, presenting the count of steps taken during these intervals.\n",
-    "\n",
-    "The dataset is available for download from the course website:\n",
-    "\n",
-    "* Dataset: [Activity monitoring data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip) \n",
-    "\n",
-    "The dataset includes the following variables:\n",
-    "\n",
-    "- `steps`: Number of steps taken in a 5-minute interval (missing values denoted as 𝙽𝙰)\n",
-    "- `date`: Date of measurement in YYYY-MM-DD format\n",
-    "- `interval`: Identifier for the 5-minute interval of the measurement\n",
-    "\n",
-    "The dataset is stored in a comma-separated-value (CSV) file, comprising 17,568 observations.\n",
-    "\n",
-    "## Loading and Preprocessing Data\n",
-    "Unzip the data to obtain a CSV file."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 1,
-   "id": "3b79f60f-13da-4d49-ae77-605d33441bc9",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "library(\"data.table\")\n",
-    "\n",
-    "if (!dir.exists(\"Data\")) {\n",
-    "  dir.create(\"Data\")\n",
-    "}\n",
-    "\n",
-    "download.file(\"https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip\",destfile = \"Data/archive.zip\")\n",
-    "unzip(\"Data/archive.zip\", exdir = \"Data\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "0672b152-9554-4ad1-b447-218b76fa6174",
-   "metadata": {},
-   "source": [
-    "Read the CSV data into a Data.Table."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 2,
-   "id": "44209268-b439-48a3-a35c-52c5a3338b69",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "activityDT <- data.table::fread(input = \"Data/activity.csv\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "61c378e1-a2f5-4405-8ade-a404cde88acc",
-   "metadata": {},
-   "source": [
-    "## Daily Steps Analysis\n",
-    "\n",
-    "1. Calculate the total number of steps taken per day."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 3,
-   "id": "54b4faec-dd70-4945-b49c-450ef5de4665",
-   "metadata": {},
-   "outputs": [
-    {
+---
+title: 'Reproducible Research: Peer Assessment 1'
+author: 'Farina Fayyz'
+date: '10th Febraury, 2024'
+output:
+  pdf_document: default
+  html_document:
+    keep_md: true
+---
+
+**Repository:** Explore the GitHub repository for the complete specialization: [Data Science Coursera](https://github.com/FarinaFayyaz/datasciencecoursera)
+## Introduction  
+The advent of activity monitoring devices, such as Fitbit, Nike Fuelband, or Jawbone Up, has enabled the collection of extensive personal movement data. These devices are integral to the \"quantified self\" movement, where individuals regularly measure themselves to enhance health, identify behavioral patterns, or simply indulge their tech enthusiasm. Despite the potential insights, the raw data's complexity and a dearth of statistical methods and software for analysis hinder the full utilization of this data.  
+This project utilizes data from a personal activity monitoring device, capturing information at 5-minute intervals throughout the day. The dataset spans two months (October and November 2012) from an anonymous individual, presenting the count of steps taken during these intervals.  
+The dataset is available for download from the course website:\n",
+## Dataset: [Activity monitoring data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip)   
+"The dataset includes the following variables:
+    "- `steps`: Number of steps taken in a 5-minute interval (missing values denoted as 𝙽𝙰)  
+    "- `date`: Date of measurement in YYYY-MM-DD format  
+    "- `interval`: Identifier for the 5-minute interval of the measurement  
+    "The dataset is stored in a comma-separated-value (CSV) file, comprising 17,568 observations.  
+ ## Loading and Preprocessing Data  
+ Unzip the data to obtain a CSV file.  
+```{r}
+if (!dir.exists(\"Data\")) {
+dir.create(\"Data\")
+}
+download.file(\"https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip\",destfile = \"Data/archive.zip\")
+    "unzip(\"Data/archive.zip\", exdir = \"Data\")
+```
+Read the CSV data into a Data.Table.
+```{r}
+activityDT <- data.table::fread(input = \"Data/activity.csv\")
+```
+## Daily Steps Analysis
+1. Calculate the total number of steps taken per day.
      "data": {
       "text/html": [
        "<table>\n",
